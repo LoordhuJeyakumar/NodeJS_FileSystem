@@ -22,7 +22,7 @@ function createFile(request, response) {
   const timestamp = Date.now();
 
   const date = new Date(timestamp).toDateString();
-  const time = new Date(timestamp).toTimeString();
+  const time = new Date(timestamp).toLocaleTimeString();
 
   let fileName = `${date} - ${time.split(":").join("_")}.txt`;
 
