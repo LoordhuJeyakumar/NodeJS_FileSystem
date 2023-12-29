@@ -22,7 +22,7 @@ function createFile(request, response) {
   const timestamp = Date.now();
 
   const date = new Date(timestamp).toDateString();
-  const time = new Date(timestamp).toLocaleTimeString();
+  const time = new Date(timestamp).toTimeString();
 
   let fileName = `${date} - ${time.split(":").join("_")}.txt`;
 
@@ -41,7 +41,7 @@ function retriveFiles(request, response) {
   try {
     const files = fs.readdirSync(path.resolve("./files"));
     if (files.length !== 0) {
-      response.status(200).json({ files });
+      response.status(200).json({ all_Files: files });
       console.log(files);
     } else {
       response.status(200).json({ message: "there is no files " });
