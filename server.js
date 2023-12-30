@@ -1,10 +1,12 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const { error } = require("console");
 const app = express();
 
 const PORT = 3001;
+
+
+
 
 app.get("/", (request, response) => {
   response.send("<h1>NodeJS FileSystem</h1>");
@@ -18,11 +20,15 @@ app.get("/api/files", (request, response) => {
   retriveFiles(request, response);
 });
 
+app.get('*',(req,res)=>{
+  res.status(404).json({ message: "there is no such url" })
+})
+
 function createFile(request, response) {
   const timestamp = Date.now();
 
   const date = new Date(timestamp).toDateString();
-  const time = new Date(timestamp).toTimeString().slice(0,17);
+  const time = new Date(timestamp).toTimeString().slice(0, 17);
 
   let fileName = `${date} - ${time.split(":").join("_")}.txt`;
 
@@ -42,7 +48,6 @@ function retriveFiles(request, response) {
     const files = fs.readdirSync(path.resolve("./files"));
     if (files.length !== 0) {
       response.status(200).json({ all_Files: files });
-      console.log(files);
     } else {
       response.status(200).json({ message: "there is no files " });
     }
